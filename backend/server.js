@@ -1,23 +1,22 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
 app.use(cors());
 app.use(bodyParser.json());
 
-// Root route
+// Root route for Render health checks
 app.get("/", (req, res) => {
-  res.send("✅ Machans Egg Retail Backend is running. Use /api/... for endpoints.");
+  res.send("Machans Egg Retail Backend is running 🚀");
 });
 
-// Example API route
-app.get("/api/test", (req, res) => {
-  res.json({ message: "Hello from backend API" });
+// API routes
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", service: "backend" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Backend running on port ${PORT}`);
-});
+// TODO: Add your other API routes: /api/purchases, /api/sales, etc.
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));

@@ -1,27 +1,23 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-// Allow frontend Render domain + localhost
-app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://machans-egg-retail-1.onrender.com"
-  ],
-  credentials: true
-}));
+app.use(cors());
+app.use(bodyParser.json());
 
-app.use(express.json());
-
-// Example route
-app.get("/api/health", (req, res) => {
-  res.json({ status: "Backend running OK!" });
+// Root route
+app.get("/", (req, res) => {
+  res.send("✅ Machans Egg Retail Backend is running. Use /api/... for endpoints.");
 });
 
-// Import your routes here (purchase, sales, etc.)
-// const purchaseRoutes = require("./routes/purchase");
-// app.use("/api/purchases", purchaseRoutes);
+// Example API route
+app.get("/api/test", (req, res) => {
+  res.json({ message: "Hello from backend API" });
+});
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Backend running on port ${PORT}`);
+});

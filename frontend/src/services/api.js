@@ -1,20 +1,17 @@
-import axios from "axios";
+const API_BASE_URL = process.env.REACT_APP_API_URL || "https://machans-egg-retail-2.onrender.com";
 
-// Base URL dynamically from environment or default to Render backend
-const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "https://machans-egg-retail-2.onrender.com/api",
-});
+export async function fetchData(endpoint) {
+  const res = await fetch(`${API_BASE_URL}${endpoint}`);
+  if (!res.ok) throw new Error("API error");
+  return res.json();
+}
 
-// Example API functions
-export const getPurchases = () => API.get("/purchases");
-export const createPurchase = (data) => API.post("/purchases", data);
-export const updatePurchase = (id, data) => API.put(`/purchases/${id}`, data);
-export const deletePurchase = (id) => API.delete(`/purchases/${id}`);
-
-export const getSales = () => API.get("/sales");
-export const createSale = (data) => API.post("/sales", data);
-
-export const getPayments = () => API.get("/payments");
-export const createPayment = (data) => API.post("/payments", data);
-
-export default API;
+export async function postData(endpoint, data) {
+  const res = await fetch(`${API_BASE_URL}${endpoint}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("API error");
+  return res.json();
+}

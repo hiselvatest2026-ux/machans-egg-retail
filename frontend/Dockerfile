@@ -1,12 +1,10 @@
 FROM node:18 as build
-
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-# Serve build using serve
 FROM node:18
 RUN npm install -g serve
 WORKDIR /app

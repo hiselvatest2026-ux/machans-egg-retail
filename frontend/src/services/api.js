@@ -1,4 +1,11 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || "https://machans-egg-retail-2.onrender.com";
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL || "https://machans-egg-retail-2.onrender.com",
+});
+
+export default api;
+
 
 export async function fetchData(endpoint) {
   const res = await fetch(`${API_BASE_URL}${endpoint}`);

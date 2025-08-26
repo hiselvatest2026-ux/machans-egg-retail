@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/static/js/main.ea51a480.js",
+    "index.html": "/index.html",
+    "static/media/Reports": "/static/media/Reports.b79609c185007fdb2fe4",
+    "main.ea51a480.js.map": "/static/js/main.ea51a480.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.ea51a480.js"
+  ]
+}

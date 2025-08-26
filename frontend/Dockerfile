@@ -1,14 +1,15 @@
-FROM node:18
+FROM node:18 as build
 
 WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-# Install serve globally
+# Serve build using serve
+FROM node:18
 RUN npm install -g serve
-
-# Copy build folder
-COPY build/ ./build
-
+WORKDIR /app
+COPY --from=build /app/build ./build
 EXPOSE 3000
-
-# Serve React build
 CMD ["serve", "-s", "build", "-l", "3000"]

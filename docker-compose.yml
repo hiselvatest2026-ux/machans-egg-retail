@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: machans
+      POSTGRES_PASSWORD: machans123
+      POSTGRES_DB: machans_egg
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d:ro
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgres://machans:machans123@db:5432/machans_egg
+      PORT: 5000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    environment:
+      VITE_API_BASE: "http://localhost:5000"
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

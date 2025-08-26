@@ -1,20 +1,14 @@
-# Stage 1: Build React app
-FROM node:18 AS build
+FROM node:18
+
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
 
-# Stage 2: Serve with Nginx
-FROM nginx:1.25-alpine
-WORKDIR /usr/share/nginx/html
+# Install serve globally
+RUN npm install -g serve
 
-# Copy built React files
-COPY --from=build /app/build .
-
-# Replace default Nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy build folder
+COPY build/ ./build
 
 EXPOSE 3000
-CMD ["nginx", "-g", "daemon off;"]
+
+# Serve React build
+CMD ["serve", "-s", "build", "-l", "3000"]
